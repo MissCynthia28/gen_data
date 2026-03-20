@@ -207,26 +207,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>geno_subset_A1 <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"./02_activities/data/geno.A1.additive.raw"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>geno_subset_A1<span class="ot">=</span><span class="fu">na.omit</span>(geno_subset_A1)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#geno_subset$PHENOTYPE=geno_subset$PHENOTYPE-1</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(geno_subset_A1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(geno_subset_A1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     FID    IID   PAT   MAT   SEX PHENOTYPE rs3813199_G rs11804831_T
    &lt;int&gt; &lt;char&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;num&gt;       &lt;int&gt;        &lt;int&gt;
-1:     1  A2002     0     0     1   1.85385           2            2
-2:     2  A2003     0     0     1   2.08264           2            1
-3:     3  A2004     0     0     1   2.73871           2            2
-4:     4  A2005     0     0     1   1.34114           2            1
-5:     6  A2007     0     0     1   2.38297           2            2
-6:     7  A2008     0     0     1   1.51430           2            2
+1:     0  A2001     0     0     1 -0.694438           2            2
+2:     1  A2002     0     0     1  1.853850           2            2
+3:     2  A2003     0     0     1  2.082640           2            1
+4:     3  A2004     0     0     1  2.738710           2            2
+5:     4  A2005     0     0     1  1.341140           2            1
+6:     5  A2006     0     0     1  0.416779           2            1
    rs3128342_C rs1861_C
          &lt;int&gt;    &lt;int&gt;
-1:           2        2
+1:           2       NA
 2:           2        2
-3:           1        2
+3:           2        2
 4:           1        2
-5:           2        2
-6:           1        2</code></pre>
+5:           1        2
+6:           2       NA</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -291,38 +290,40 @@ A2006         2         1         2         -9</code></pre>
 <ol start="2" type="i">
 <li>What are the minor allele frequencies (MAFs) for these four SNPs?</li>
 </ol>
-<pre><code># Your code here...
-rs1861 = 1- 0.9430874 = 0.0567126  
-rs3813199 = 1 - 0.8456588 = 0.1543412
-rs3128342 = 1 - 0.6948789 = 0.3051211
-rs11804831 = 1 - 0.9460141 = 0.0539859</code></pre>
-<section id="question-3-hardyweinberg-equilibrium-hwe-test" class="level4">
-<h4 class="anchored" data-anchor-id="question-3-hardyweinberg-equilibrium-hwe-test">Question 3: Hardy–Weinberg Equilibrium (HWE) Test</h4>
-<ol type="i">
-<li>Conduct the Hardy–Weinberg Equilibrium (HWE) test for all SNPs in the .bim file. Then, load the file containing the HWE p-value results and display the first few rows of the resulting data frame.</li>
-</ol>
-<pre><code># Your code here...</code></pre>
+</section>
+<section id="your-code-here-1" class="level1">
+<h1>Your code here…</h1>
+<p>rs1861 = 1- 0.9430874 = 0.0567126<br>
+rs3813199 = 1 - 0.8456588 = 0.1543412 rs3128342 = 1 - 0.6948789 = 0.3051211 rs11804831 = 1 - 0.9460141 = 0.0539859</p>
+<pre><code>
+#### Question 3: Hardy–Weinberg Equilibrium (HWE) Test
+
+(i) Conduct the Hardy–Weinberg Equilibrium (HWE) test for all SNPs in the .bim file. Then, load the file containing the HWE p-value results and display the first few rows of the resulting data frame.
+</code></pre>
+</section>
+<section id="your-code-here-2" class="level1">
+<h1>Your code here…</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">plink2</span> <span class="at">--bfile</span> ./02_activities/data/gwa.qc.A1 <span class="at">--hardy</span> <span class="at">--out</span> ./02_activities/data/gwa_qc_A1_hwe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">plink2</span> <span class="at">--bfile</span> ./02_activities/data/gwa.qc.A1 <span class="at">--hardy</span> <span class="at">--out</span> ./02_activities/data/gwa_qc_A1_hwe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>hwe_pvalue <span class="ot">&lt;-</span> <span class="cf">function</span>(geno_vector) {</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove missing</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  geno_vector <span class="ot">&lt;-</span> geno_vector[<span class="sc">!</span><span class="fu">is.na</span>(geno_vector)]</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Count genotypes</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">table</span>(geno_vector)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if there are enough counts to test</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(counts <span class="sc">==</span> <span class="dv">0</span>)) {</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)  <span class="co"># Cannot test properly with empty cell</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    result<span class="ot">=</span><span class="fu">HWExact</span>(<span class="fu">as.numeric</span>(counts))<span class="sc">$</span>pval</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#result=HWChisq(as.vector(counts))$pval</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to all 4 SNPs (columns of the matrix)</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>hwe_pvalues_A1 <span class="ot">&lt;-</span> <span class="fu">apply</span>(geno_mat_A1, <span class="dv">2</span>, hwe_pvalue)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>hwe_pvalue <span class="ot">&lt;-</span> <span class="cf">function</span>(geno_vector) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove missing</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  geno_vector <span class="ot">&lt;-</span> geno_vector[<span class="sc">!</span><span class="fu">is.na</span>(geno_vector)]</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Count genotypes</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">table</span>(geno_vector)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if there are enough counts to test</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(counts <span class="sc">==</span> <span class="dv">0</span>)) {</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)  <span class="co"># Cannot test properly with empty cell</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    result<span class="ot">=</span><span class="fu">HWExact</span>(<span class="fu">as.numeric</span>(counts))<span class="sc">$</span>pval</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#result=HWChisq(as.vector(counts))$pval</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to all 4 SNPs (columns of the matrix)</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>hwe_pvalues_A1 <span class="ot">&lt;-</span> <span class="fu">apply</span>(geno_mat_A1, <span class="dv">2</span>, hwe_pvalue)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Haldane Exact test for Hardy-Weinberg equilibrium (autosomal)
 using standard (SELOME) p-value
@@ -351,8 +352,8 @@ sample counts: n =  15 n =  398 n =  3551
 H0: HWE (D==0), H1: D &lt;&gt; 0 
 D =  -3.447023 p-value =  0.2747191 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show results</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>hwe_pvalues_A1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show results</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hwe_pvalues_A1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 1:1148140  1:1184667  1:1476697 1:43463026 
  1.0000000  0.1133539  0.3302726  0.2747191 </code></pre>
@@ -366,7 +367,6 @@ rs1861 = 1.0000000
 rs3813199 = 0.1133539
 rs3128342 = 0.3302726
 rs11804831 = 0.2747191</code></pre>
-</section>
 <section id="question-4-genetic-association-test" class="level4">
 <h4 class="anchored" data-anchor-id="question-4-genetic-association-test">Question 4: Genetic Association Test</h4>
 <ol type="i">
@@ -374,14 +374,14 @@ rs11804831 = 0.2747191</code></pre>
 </ol>
 <pre><code># Your code here...</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Pick SNP rs1861</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(geno_subset_A1<span class="sc">$</span>rs1861)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Pick SNP rs1861</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(geno_subset_A1<span class="sc">$</span>rs1861)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1    2 
-  14  389 3459 </code></pre>
+  15  398 3551 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>freq[freq<span class="sc">$</span>ID<span class="sc">==</span><span class="st">'rs1861'</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>freq[freq<span class="sc">$</span>ID<span class="sc">==</span><span class="st">'rs1861'</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   #CHROM     ID    REF    ALT PROVISIONAL_REF? ALT_FREQS OBS_CT
     &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;           &lt;char&gt;     &lt;num&gt;  &lt;int&gt;
@@ -389,11 +389,11 @@ rs11804831 = 0.2747191</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression model</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_A1)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View model summary</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression model</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_A1)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View model summary</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -401,45 +401,46 @@ lm(formula = PHENOTYPE ~ rs1861_C, data = geno_subset_A1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.5389 -0.6846  0.0017  0.6971  3.3318 
+-3.5439 -0.6850  0.0021  0.6993  3.3268 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.06109    0.09626   0.635    0.526    
-rs1861_C     0.96698    0.05016  19.279   &lt;2e-16 ***
+(Intercept)  0.05238    0.09486   0.552    0.581    
+rs1861_C     0.97382    0.04943  19.703   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.003 on 3860 degrees of freedom
-Multiple R-squared:  0.08783,   Adjusted R-squared:  0.08759 
-F-statistic: 371.7 on 1 and 3860 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.003 on 3962 degrees of freedom
+  (36 observations deleted due to missingness)
+Multiple R-squared:  0.08924,   Adjusted R-squared:  0.08901 
+F-statistic: 388.2 on 1 and 3962 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(geno_subset_A1<span class="sc">$</span>   rs1861_C)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(geno_subset_A1<span class="sc">$</span>   rs1861_C)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1    2 
-  14  389 3459 </code></pre>
+  15  398 3551 </code></pre>
 </div>
 </div>
 <p>#p-value &lt; 2e-16</p>
 <ol start="2" type="i">
 <li>How would you interpret the beta coefficient from this regression?</li>
 </ol>
-<pre><code># Your answer here... We performed linear regression to test the association between genotype (rs1861) and the continous phenotype. The regression coefficient for rs1861 is 0.96698 (p &lt;2e-16), indicating that each additional copy of the T allele is associated with an average increase of 0.96698 units of the phenotype, suggesting positive additive effect. The significant p-value suggests evidence of an association between this SNP and the phenotype in our sample.</code></pre>
+<pre><code># Your answer here... We performed linear regression to test the association between genotype (rs1861_C) and the continous phenotype. The regression coefficient for rs1861 is 0.97382 (p &lt;2e-16), indicating that each additional copy of the T allele is associated with an average increase of 0.97382 units of the phenotype. This suggests a positive additive effect. The significant p-value suggests evidence of an association between this SNP and the phenotype in our sample.</code></pre>
 <ol start="3" type="i">
 <li>Plot the scatterplot of phenotype versus the genotype of SNP rs1861. Add the regression line to the plot.</li>
 </ol>
 <pre><code># Your code here...</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(geno_subset_A1<span class="sc">$</span>rs1861_C), geno_subset_A1<span class="sc">$</span>PHENOTYPE,</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Genotype (rs1861: 0,1,2 copies)"</span>,</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Continuous phenotype"</span>,</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Phenotype vs rs1861 genotype"</span>,</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>)</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_A1)</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(geno_subset_A1<span class="sc">$</span>rs1861_C), geno_subset_A1<span class="sc">$</span>PHENOTYPE,</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Genotype (rs1861_C: 0,1,2 copies)"</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Continuous phenotype"</span>,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Phenotype vs rs1861_C genotype"</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_A1)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -453,19 +454,19 @@ F-statistic: 371.7 on 1 and 3860 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ol>
 <pre><code># Your code here...</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>geno_subset_dom_A1 <span class="ot">&lt;-</span> geno_subset_A1  </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>geno_subset_dom_A1[, <span class="dv">7</span><span class="sc">:</span><span class="fu">ncol</span>(geno_subset_dom_A1)] <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(geno_subset_A1[, <span class="dv">7</span><span class="sc">:</span><span class="fu">ncol</span>(geno_subset_A1)], <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>geno_subset_dom_A1 <span class="ot">&lt;-</span> geno_subset_A1  </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>geno_subset_dom_A1[, <span class="dv">7</span><span class="sc">:</span><span class="fu">ncol</span>(geno_subset_dom_A1)] <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(geno_subset_A1[, <span class="dv">7</span><span class="sc">:</span><span class="fu">ncol</span>(geno_subset_A1)], <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="22" type="a">
 <li>Conduct a linear regression to test the association between the recessive-coded rs1861 and the phenotype. What is the p-value?</li>
 </ol>
 <pre><code># Your code here...</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit logistic regression model</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_dom_A1)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit logistic regression model</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_dom_A1)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -473,18 +474,19 @@ lm(formula = PHENOTYPE ~ rs1861_C, data = geno_subset_dom_A1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.5390 -0.6955 -0.0002  0.6982  3.3317 
+-3.5437 -0.6892  0.0015  0.7016  3.3270 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.99375    0.05005   19.86   &lt;2e-16 ***
-rs1861_C     1.00139    0.05288   18.94   &lt;2e-16 ***
+(Intercept)  0.99231    0.04945   20.07   &lt;2e-16 ***
+rs1861_C     1.00754    0.05224   19.29   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.005 on 3860 degrees of freedom
-Multiple R-squared:  0.085, Adjusted R-squared:  0.08476 
-F-statistic: 358.6 on 1 and 3860 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.005 on 3962 degrees of freedom
+  (36 observations deleted due to missingness)
+Multiple R-squared:  0.08582,   Adjusted R-squared:  0.08559 
+F-statistic:   372 on 1 and 3962 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>#P-value &lt; 2e-16</p>
@@ -493,15 +495,15 @@ F-statistic: 358.6 on 1 and 3860 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ol>
 <pre><code># Your code here...</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(geno_subset_dom_A1<span class="sc">$</span>rs1861_C), geno_subset_dom_A1<span class="sc">$</span>PHENOTYPE,</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Genotype"</span>,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Continuous phenotype"</span>,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Phenotype vs rs1861 genotype"</span>,</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>)</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_dom_A1)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(geno_subset_dom_A1<span class="sc">$</span>rs1861_C), geno_subset_dom_A1<span class="sc">$</span>PHENOTYPE,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Genotype"</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Continuous phenotype"</span>,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Phenotype vs rs1861_C genotype"</span>,</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(PHENOTYPE <span class="sc">~</span> rs1861_C, <span class="at">data =</span> geno_subset_dom_A1)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -513,7 +515,7 @@ F-statistic: 358.6 on 1 and 3860 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol start="7" type="i">
 <li>Which model fits better? Justify your answer.</li>
 </ol>
-<pre><code># Your answer here... The R square of 0.08783 indicates that the additive model offers the best overall fit.</code></pre>
+<pre><code># Your answer here... The R square of 0.08924, which is closer to one, indicates that the additive model offers the best overall fit.</code></pre>
 </section>
 <section id="criteria" class="level3">
 <h3 class="anchored" data-anchor-id="criteria">Criteria</h3>

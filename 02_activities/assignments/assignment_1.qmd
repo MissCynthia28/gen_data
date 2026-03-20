@@ -83,8 +83,7 @@ plink2 --bfile ./02_activities/data/gwa.qc.A1 --freq --out ./02_activities/data/
 
 ```{r,message=FALSE, warning=FALSE}
 geno_subset_A1 <- fread("./02_activities/data/geno.A1.additive.raw")
-geno_subset_A1=na.omit(geno_subset_A1)
-#geno_subset$PHENOTYPE=geno_subset$PHENOTYPE-1
+
 head(geno_subset_A1)
 ```
 
@@ -122,7 +121,7 @@ allele_freq
 
 (ii) What are the minor allele frequencies (MAFs) for these four SNPs?
 
-```         
+
 # Your code here...
 rs1861 = 1- 0.9430874 = 0.0567126  
 rs3813199 = 1 - 0.8456588 = 0.1543412
@@ -136,7 +135,7 @@ rs11804831 = 1 - 0.9460141 = 0.0539859
 
 ```         
 # Your code here...
-``` 
+
 ```{bash,results='hide',message=FALSE, warning=FALSE}
 plink2 --bfile ./02_activities/data/gwa.qc.A1 --hardy --out ./02_activities/data/gwa_qc_A1_hwe
 ```
@@ -201,7 +200,7 @@ table(geno_subset_A1$	rs1861_C)
 (ii) How would you interpret the beta coefficient from this regression?
 
 ```         
-# Your answer here... We performed linear regression to test the association between genotype (rs1861) and the continous phenotype. The regression coefficient for rs1861 is 0.96698 (p <2e-16), indicating that each additional copy of the T allele is associated with an average increase of 0.96698 units of the phenotype, suggesting positive additive effect. The significant p-value suggests evidence of an association between this SNP and the phenotype in our sample.
+# Your answer here... We performed linear regression to test the association between genotype (rs1861_C) and the continous phenotype. The regression coefficient for rs1861 is 0.97382 (p <2e-16), indicating that each additional copy of the T allele is associated with an average increase of 0.97382 units of the phenotype. This suggests a positive additive effect. The significant p-value suggests evidence of an association between this SNP and the phenotype in our sample.
 ```
 
 (iii) Plot the scatterplot of phenotype versus the genotype of SNP rs1861. Add the regression line to the plot.
@@ -211,9 +210,9 @@ table(geno_subset_A1$	rs1861_C)
 ```
 ```{r,message=FALSE, warning=FALSE}
 plot(jitter(geno_subset_A1$rs1861_C), geno_subset_A1$PHENOTYPE,
-     xlab = "Genotype (rs1861: 0,1,2 copies)",
+     xlab = "Genotype (rs1861_C: 0,1,2 copies)",
      ylab = "Continuous phenotype",
-     main = "Phenotype vs rs1861 genotype",
+     main = "Phenotype vs rs1861_C genotype",
      pch = 16)
 
 model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_A1)
@@ -255,7 +254,7 @@ summary(model)
 plot(jitter(geno_subset_dom_A1$rs1861_C), geno_subset_dom_A1$PHENOTYPE,
      xlab = "Genotype",
      ylab = "Continuous phenotype",
-     main = "Phenotype vs rs1861 genotype",
+     main = "Phenotype vs rs1861_C genotype",
      pch = 16)
 
 model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_dom_A1)
@@ -266,7 +265,7 @@ abline(model, col = "blue", lwd = 2)
 (vii) Which model fits better? Justify your answer.
 
 ```         
-# Your answer here... The R square of 0.08783 indicates that the additive model offers the best overall fit.
+# Your answer here... The R square of 0.08924, which is closer to one, indicates that the additive model offers the best overall fit.
 ```
 
 ### Criteria

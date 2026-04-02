@@ -18,35 +18,115 @@ You will need to install PLINK and run the analyses. Please follow the OS-specif
 Before fitting any models, it is essential to understand the data. Use R or bash code to answer the following questions about the `gwa.qc.A1.fam`, `gwa.qc.A1.bim`, and `gwa.qc.A1.bed` files, available at the following Google Drive link: <https://drive.google.com/drive/folders/11meVqGCY5yAyI1fh-fAlMEXQt0VmRGuz?usp=drive_link>. Please download all three files from this link and place them in `02_activities/data/`.
 
 (i) Read the .fam file. How many samples does the dataset contain?
-
+```{bash}
+pwd
+cd ~/Desktop/gen_data
+head ./02_activities/data/gwa.qc.A1.fam
+wc -l ./02_activities/data/gwa.qc.A1.fam
 ```         
-# Your answer here...
+# Your answer here...4000
 ```
 
 (ii) What is the 'variable type' of the response variable (i.e.Continuous or binary)?
+```
+```{r setup, include=FALSE}
+# Set up a consistent path for all chunks of code
+knitr::opts_knit$set(root.dir = normalizePath("../../"))
+```
 
+```{r, message=FALSE, warning=FALSE, results='hide'}
+library(data.table)
+library(ggplot2)
+library(seqminer)
+library(HardyWeinberg)
+library(dplyr)
+```
+
+```{r}
+fam <- fread("./02_activities/data/gwa.qc.A1.fam")  
+fam [1:5,1:6]
 ```         
-# Your answer here...
+# Your answer here...Continuous
 ```
 
 (iii) Read the .bim file. How many SNPs does the dataset contain?
-
-```         
-# Your answer here...
+```
+```{bash}
+pwd
+head ./02_activities/data/gwa.qc.A1.bim
+wc -l ./02_activities/data/gwa.qc.A1.bim
+```             
+# Your answer here...101,083
 ```
 
 #### Question 2: Allele Frequency Estimation
 
 (i) Load the genotype matrix for SNPs rs1861, rs3813199, rs3128342, and rs11804831 using additive coding. What are the allele frequencies (AFs) for these four SNPs?
 
-```         
-# Your code here...
+```    
+# Your code here... 
+```{bash,message=FALSE, warning=FALSE}
+# Create SNP list file with 4 SNPs
+printf "%s\n" rs1861 rs3813199 rs3128342 rs11804831 > ./02_activities/data/snplist.txt
 ```
+
+```{bash, results='hide',message=FALSE, warning=FALSE}
+plink2 --bfile ./02_activities/data/gwa.qc.A1 \
+      --extract ./02_activities/data/snplist.txt \
+      --recode A \
+      --out ./02_activities/data/geno.A1.additive    
+```
+
+```{bash,results='hide',message=FALSE, warning=FALSE}
+plink2 --bfile ./02_activities/data/gwa.qc.A1 --freq --out ./02_activities/data/gwa_qc_A1_freq
+```
+
+```{r,message=FALSE, warning=FALSE}
+geno_subset_A1 <- fread("./02_activities/data/geno.A1.additive.raw")
+
+head(geno_subset_A1)
+```
+
+```{r,message=FALSE, warning=FALSE}
+freq <- fread("./02_activities/data/gwa_qc_A1_freq.afreq")
+head(freq)
+```
+
+```{r,message=FALSE, warning=FALSE}
+set.seed(1234)
+fam_all_A1 <- fread("./02_activities/data/gwa.qc.A1.fam")
+N=dim(fam_all_A1)[1];N
+bim_all_A1 <- fread("./02_activities/data/gwa.qc.A1.bim")
+M <- nrow(bim_all_A1);M
+
+indx.SNP=which((bim_all_A1$V2)%in%c('rs1861','rs3813199','rs3128342','rs11804831'))
+#print(indx.SNP)
+geno_mat_A1 <- readPlinkToMatrixByIndex('./02_activities/data/gwa.qc.A1', 1:N, indx.SNP)
+dim(geno_mat_A1)
+head(geno_mat_A1)
+```
+
+```{r,message=FALSE, warning=FALSE}
+geno_mat_A1[geno_mat_A1==-9]=NA
+# Compute allele frequencies for each SNP (column), ignoring NAs
+allele_freq <- apply(geno_mat_A1, 2, function(x) {
+  sum(x, na.rm = TRUE) / (2 * sum(!is.na(x)))
+})
+
+# Look at the result
+allele_freq
+```
+
+#rs1861 = 0.9430874; rs3813199 = 0.8456588; rs3128342 = 0.6948789; rs11804831 = 0.9460141
 
 (ii) What are the minor allele frequencies (MAFs) for these four SNPs?
 
-```         
+
 # Your code here...
+rs1861 = 1- 0.9430874 = 0.0567126  
+rs3813199 = 1 - 0.8456588 = 0.1543412
+rs3128342 = 1 - 0.6948789 = 0.3051211
+rs11804831 = 1 - 0.9460141 = 0.0539859
 ```
 
 #### Question 3: Hardy–Weinberg Equilibrium (HWE) Test
@@ -55,12 +135,43 @@ Before fitting any models, it is essential to understand the data. Use R or bash
 
 ```         
 # Your code here...
+
+```{bash,results='hide',message=FALSE, warning=FALSE}
+plink2 --bfile ./02_activities/data/gwa.qc.A1 --hardy --out ./02_activities/data/gwa_qc_A1_hwe
+```
+
+```{r,message=FALSE, warning=FALSE}
+
+hwe_pvalue <- function(geno_vector) {
+  # Remove missing
+  geno_vector <- geno_vector[!is.na(geno_vector)]
+  # Count genotypes
+  counts <- table(geno_vector)
+  
+  # Check if there are enough counts to test
+  if (any(counts == 0)) {
+    return(NA)  # Cannot test properly with empty cell
+  } else {
+    result=HWExact(as.numeric(counts))$pval
+    #result=HWChisq(as.vector(counts))$pval
+    return(result)
+  }
+}
+# Apply to all 4 SNPs (columns of the matrix)
+hwe_pvalues_A1 <- apply(geno_mat_A1, 2, hwe_pvalue)
+
+# Show results
+hwe_pvalues_A1
 ```
 
 (ii) What are the HWE p-values for SNPs rs1861, rs3813199, rs3128342, and rs11804831?
 
 ```         
 # Your code here...
+rs1861 = 1.0000000
+rs3813199 = 0.1133539
+rs3128342 = 0.3302726
+rs11804831 = 0.2747191
 ```
 
 #### Question 4: Genetic Association Test
@@ -70,11 +181,26 @@ Before fitting any models, it is essential to understand the data. Use R or bash
 ```         
 # Your code here...
 ```
+```{r,message=FALSE, warning=FALSE}
+#Pick SNP rs1861
+table(geno_subset_A1$rs1861)
+freq[freq$ID=='rs1861',]
+```
+
+```{r,message=FALSE, warning=FALSE}
+# Fit linear regression model
+model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_A1)
+
+# View model summary
+summary(model)
+table(geno_subset_A1$	rs1861_C)
+```
+#p-value < 2e-16
 
 (ii) How would you interpret the beta coefficient from this regression?
 
 ```         
-# Your answer here...
+# Your answer here... We performed linear regression to test the association between genotype (rs1861_C) and the continous phenotype. The regression coefficient for rs1861 is 0.97382 (p <2e-16), indicating that each additional copy of the T allele is associated with an average increase of 0.97382 units of the phenotype. This suggests a positive additive effect. The significant p-value suggests evidence of an association between this SNP and the phenotype in our sample.
 ```
 
 (iii) Plot the scatterplot of phenotype versus the genotype of SNP rs1861. Add the regression line to the plot.
@@ -82,11 +208,28 @@ Before fitting any models, it is essential to understand the data. Use R or bash
 ```         
 # Your code here...
 ```
+```{r,message=FALSE, warning=FALSE}
+plot(jitter(geno_subset_A1$rs1861_C), geno_subset_A1$PHENOTYPE,
+     xlab = "Genotype (rs1861_C: 0,1,2 copies)",
+     ylab = "Continuous phenotype",
+     main = "Phenotype vs rs1861_C genotype",
+     pch = 16)
+
+model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_A1)
+
+abline(model, col = "blue", lwd = 2)
+``` 
 
 (iv) Convert the genotype coding for rs1861 to recessive coding.
 
 ```         
 # Your code here...
+```
+```{r}
+geno_subset_dom_A1 <- geno_subset_A1  
+geno_subset_dom_A1[, 7:ncol(geno_subset_dom_A1)] <- as.data.frame(
+  lapply(geno_subset_A1[, 7:ncol(geno_subset_A1)], function(x) ifelse(x == 2, 1, 0))
+)
 ```
 
 (v) Conduct a linear regression to test the association between the recessive-coded rs1861 and the phenotype. What is the p-value?
@@ -94,17 +237,35 @@ Before fitting any models, it is essential to understand the data. Use R or bash
 ```         
 # Your code here...
 ```
+```{r}
+# Fit logistic regression model
+model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_dom_A1)
+summary(model)
+```
+
+#P-value < 2e-16 
 
 (vi) Plot the scatterplot of phenotype versus the recessive-coded genotype of rs1861. Add the regression line to the plot.
 
 ```         
 # Your code here...
 ```
+```{r,message=FALSE, warning=FALSE}
+plot(jitter(geno_subset_dom_A1$rs1861_C), geno_subset_dom_A1$PHENOTYPE,
+     xlab = "Genotype",
+     ylab = "Continuous phenotype",
+     main = "Phenotype vs rs1861_C genotype",
+     pch = 16)
+
+model <- lm(PHENOTYPE ~ rs1861_C, data = geno_subset_dom_A1)
+
+abline(model, col = "blue", lwd = 2)
+``` 
 
 (vii) Which model fits better? Justify your answer.
 
 ```         
-# Your answer here...
+# Your answer here... The R square of 0.08924, which is closer to one, indicates that the additive model offers the best overall fit.
 ```
 
 ### Criteria
